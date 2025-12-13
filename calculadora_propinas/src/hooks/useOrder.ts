@@ -1,5 +1,5 @@
-import {useState} from "react"
-import type {MenuItem, OrderItem} from "../types"
+import { useState } from "react"
+import type { MenuItem, OrderItem } from "../types"
 
 export default function useOrder() {
 
@@ -26,12 +26,18 @@ export default function useOrder() {
         setOrder(updatedOrder)
     }
 
+    const placeOrder = () => {
+        setOrder([])
+        setTip(0)
+    }
+
 
     return {
         order,
         addItem,
         removeItem,
         tip,
-        setTip
+        setTip,
+        placeOrder
     }
 }
