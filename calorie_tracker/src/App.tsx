@@ -1,4 +1,4 @@
-import {useReducer, useEffect, useMemo} from "react"
+import { useReducer, useEffect, useMemo } from "react"
 import Form from "./components/Form"
 import { activityReducer, initialState } from "./reducers/activity-reducer"
 import ActivityList from "./components/ActivityList";
