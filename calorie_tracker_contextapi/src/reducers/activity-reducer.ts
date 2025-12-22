@@ -24,7 +24,7 @@ export const initialState : ActivityState = {
 export const activityReducer = (
         state : ActivityState = initialState,
         action: ActivityActions
-    ) => {
+    ): ActivityState => {
 
     if(action.type === 'save-activity') {
         let updatedActivities : Activity[] = []
