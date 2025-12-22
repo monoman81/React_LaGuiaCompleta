@@ -8,7 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-../Resources/09-calorie-tracker-inicio/09-calorie-tracker-inicio/dist
+dist
 dist-ssr
 *.local
 
