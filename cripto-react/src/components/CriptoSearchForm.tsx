@@ -23,14 +23,14 @@ export default function CriptoSearchForm() {
         })
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (Object.values(pair).includes('')) {
             setError('Tienes que seleccionar ambas monedas.')
             return
         }
         setError('')
-        fetchData(pair)
+        await fetchData(pair)
     }
 
     return (
