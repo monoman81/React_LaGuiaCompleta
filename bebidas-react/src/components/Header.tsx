@@ -10,13 +10,12 @@ export default function Header() {
     const fetchCategories = useAppStore(state => state.fetchCategories)
     const categories = useAppStore(state => state.categories)
     const searchRecipes = useAppStore(state => state.searchRecipes)
+    const showNotification = useAppStore(state => state.showNotification)
 
     const [filter, setFilter] = useState({
         ingredient: '',
         category: ''
     })
-
-    const [error, setError] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -34,10 +33,12 @@ export default function Header() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (Object.values(filter).includes('')) {
-            setError(true)
+            showNotification({
+                text: 'Todos los campos son obligatorios',
+                error: true
+            })
             return
         }
-        setError(false)
         await searchRecipes(filter)
     }
 
