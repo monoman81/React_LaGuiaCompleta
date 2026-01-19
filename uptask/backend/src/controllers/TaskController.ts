@@ -41,7 +41,7 @@ export class TaskController {
             req.task.name = req.body.name
             req.task.description = req.body.description
             await req.task.save()
-            return res.send('Proyecto actualizado correctamente.')
+            return res.send('Tarea actualizada correctamente.')
         }
         catch (error) {
             return res.status(500).send('Error interno del servidor')

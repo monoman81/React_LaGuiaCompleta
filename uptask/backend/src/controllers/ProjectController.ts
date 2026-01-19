@@ -26,8 +26,8 @@ export class ProjectController {
 
     static getProjectById = async (req: Request, res: Response)=> {
         try {
-            const { id } = req.params
-            const project = await Project.findById(id, undefined, undefined).populate('tasks')
+            const { projectId } = req.params
+            const project = await Project.findById(projectId, undefined, undefined).populate('tasks')
             if (!project) {
                 const error = new Error('Projecto no encontrado')
                 return res.status(400).json({ error: error.message })
@@ -41,8 +41,8 @@ export class ProjectController {
 
     static updateProject = async (req: Request, res: Response)=> {
         try {
-            const { id } = req.params
-            const project = await Project.findById(id, undefined, undefined)
+            const { projectId } = req.params
+            const project = await Project.findById(projectId, undefined, undefined)
             if (!project) {
                 const error = new Error('Projecto no encontrado')
                 return res.status(400).json({ error: error.message })
@@ -60,8 +60,8 @@ export class ProjectController {
 
     static deleteProject = async (req: Request, res: Response)=> {
         try {
-            const { id } = req.params
-            const project = await Project.findById(id)
+            const { projectId } = req.params
+            const project = await Project.findById(projectId, undefined, undefined)
             if (!project) {
                 const error = new Error('Projecto no encontrado')
                 return res.status(400).json({ error: error.message })
