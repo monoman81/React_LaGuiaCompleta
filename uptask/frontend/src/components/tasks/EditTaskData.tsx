@@ -1,7 +1,7 @@
 import {Navigate, useLocation, useParams} from "react-router-dom"
 import {useQuery} from "@tanstack/react-query"
 import {getTaskById} from "@/api/taskApi"
-import EditTaskModal from "@/components/tasks/EditTaskModal.tsx";
+import EditTaskModal from "@/components/tasks/EditTaskModal"
 
 export default function EditTaskData() {
 
