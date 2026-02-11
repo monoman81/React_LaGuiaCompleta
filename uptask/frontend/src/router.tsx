@@ -9,8 +9,13 @@ import LoginView from "@/views/auth/LoginView"
 import RegisterView from "@/views/auth/RegisterView"
 import ConfirmAccountView from "@/views/auth/ConfirmAccountView"
 import RequestNewCodeView from "@/views/auth/RequestNewCodeView"
-import ForgotPasswordView from "@/views/auth/ForgotPasswordView.tsx";
-import NewPasswordView from "@/views/auth/NewPasswordView.tsx";
+import ForgotPasswordView from "@/views/auth/ForgotPasswordView"
+import NewPasswordView from "@/views/auth/NewPasswordView"
+import TeamView from "@/views/projects/TeamView"
+import ProfileView from "@/views/profile/ProfileView"
+import ChangePasswordView from "@/views/profile/ChangePasswordView"
+import ProfileLayout from "@/layouts/ProfileLayout.tsx";
+import NotFound from "@/views/404/NotFound.tsx";
 
 const Router = () => {
     return (
@@ -21,6 +26,11 @@ const Router = () => {
                     <Route path='/projects/create' element={<CreateView />} />
                     <Route path='/projects/:projectId' element={<DetailsView />} />
                     <Route path='/projects/:projectId/edit' element={<EditView />} />
+                    <Route path='/projects/:projectId/team' element={<TeamView />} />
+                    <Route element={<ProfileLayout />}>
+                        <Route path='/profile' element={<ProfileView />} />
+                        <Route path='/profile/password' element={<ChangePasswordView />} />
+                    </Route>
                 </Route>
                 <Route element={<AuthLayout />}>
                     <Route path='/auth/login' element={<LoginView />} />
@@ -29,6 +39,9 @@ const Router = () => {
                     <Route path='/auth/request-code' element={<RequestNewCodeView />} />
                     <Route path='/auth/forgot-password' element={<ForgotPasswordView />} />
                     <Route path='/auth/new-password' element={<NewPasswordView />} />
+                </Route>
+                <Route element={<AuthLayout />}>
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -2,7 +2,7 @@ import {Router} from "express"
 import {body, param} from "express-validator"
 import {AuthController} from "../controllers/AuthController"
 import {inputErrors} from "../middleware/validation"
-import {authenticate} from "../middleware/auth";
+import {authenticate} from "../middleware/auth"
 
 const router = Router()
 
@@ -67,5 +67,34 @@ router.post('/update-password/:token',
 )
 
 router.get('/user', authenticate, AuthController.user)
+
+//Profile
+router.put('/profile',
+    authenticate,
+    body('name').notEmpty().withMessage('El nombre del usuario no puede ser vacio'),
+    body('email').isEmail().withMessage('El email no es valido'),
+    inputErrors,
+    AuthController.updateProfile
+)
+
+router.post('/change-password',
+    authenticate,
+    body('current_password').notEmpty().withMessage('El password actual no puede ser vacio.'),
+    body('password').isLength({min: 8}).withMessage('El password debe de ser minimo de 8 caracteres'),
+    body('password_confirmation').custom((value, {req}) => {
+        if (value !== req.body.password)
+            throw new Error('La confirmacion de password no coincide.')
+        return true
+    }),
+    inputErrors,
+    AuthController.changePassword
+)
+
+router.post('/check-password',
+    authenticate,
+    body('password').notEmpty().withMessage('El password no puede ser vacio.'),
+    inputErrors,
+    AuthController.checkPassword
+)
 
 export default router

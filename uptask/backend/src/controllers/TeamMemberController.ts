@@ -29,6 +29,10 @@ export class TeamMemberController {
             const error = new Error('Usuario no encontrado')
             return res.status(404).json({error: error.message})
         }
+        if (req.project.manager.toString() === user._id.toString()) {
+            const error = new Error('Usuario es el manager del proyecto')
+            return res.status(409).json({error: error.message})
+        }
         if (req.project.team.some(team => team.toString() === user._id.toString())) {
             const error = new Error('Usuario ya se encuentra agregado anteriormente')
             return res.status(409).json({error: error.message})
@@ -39,12 +43,12 @@ export class TeamMemberController {
     }
 
     static removeMemberById = async (req: Request, res: Response) => {
-        const { id } = req.body
-        if (!req.project.team.some(team => team.toString() === id)) {
+        const { userId } = req.params
+        if (!req.project.team.some(team => team.toString() === userId)) {
             const error = new Error('El usuario no existe en el proyecto')
             return res.status(409).json({error: error.message})
         }
-        req.project.team = req.project.team.filter(member => member.toString() !== id)
+        req.project.team = req.project.team.filter(member => member.toString() !== userId)
         await req.project.save()
         res.send('Usuario eliminado de este proyecto')
     }

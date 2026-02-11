@@ -15,7 +15,7 @@ export default function EditProjectForm({data, projectId}: EditProjectFormProps)
 
     const navigate = useNavigate()
 
-    const {register, handleSubmit, formState: {errors}} = useForm({
+    const {register, handleSubmit, formState: {errors}} = useForm<ProjectFormData>({
         defaultValues: {
             projectName: data.projectName,
             clientName: data.clientName,

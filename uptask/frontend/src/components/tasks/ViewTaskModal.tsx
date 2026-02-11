@@ -6,7 +6,8 @@ import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query"
 import {getTaskById, updateTaskStatus} from "@/api/taskApi"
 import {formatDate} from "@/utils/utils"
 import {statusTranslations} from "@/locales/es"
-import type {TaskStatusType} from "@/types/index.ts";
+import type {TaskStatusType} from "@/types/index"
+import NotesPanel from "@/components/notes/NotesPanel"
 
 
 export default function TaskModalDetails() {
@@ -92,6 +93,20 @@ export default function TaskModalDetails() {
                                     >{data.name}
                                     </Dialog.Title>
                                     <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
+                                    {data.completedBy.length ? (
+                                        <>
+                                            <p className="font-bold text-2xl text-slate-600 my-5">Historial de Cambios</p>
+                                            <ul className="list-decimal">
+                                                {data.completedBy.map(changes => (
+                                                    <li key={changes._id}>
+                                                        <span
+                                                            className="font-bold text-slate-600">{statusTranslations[changes.status]}</span>{' '}por: {changes.user.name}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </>
+                                    ) : null}
+
                                     <div className='my-5 space-y-3'>
                                         <label className='font-bold'>Estado Actual: </label>
                                         <select
@@ -99,11 +114,12 @@ export default function TaskModalDetails() {
                                             defaultValue={data.status}
                                             onChange={handleChange}
                                         >
-                                            {Object.entries(statusTranslations).map(([key, value]) => (
+                                        {Object.entries(statusTranslations).map(([key, value]) => (
                                                 <option key={key} value={key}>{value}</option>
                                             ))}
                                         </select>
                                     </div>
+                                    <NotesPanel notes={data.notes} />
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

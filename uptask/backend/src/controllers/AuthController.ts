@@ -200,4 +200,59 @@ export class AuthController {
         return res.json(req.user)
     }
 
+    static updateProfile = async(req: Request, res: Response) => {
+        try {
+            const { name, email } = req.body
+
+            const userExists = await User.findOne({email}, undefined, undefined)
+            if (userExists && userExists._id.toString() !== req.user._id.toString()) {
+                const error = new Error('El email ya esta registrado')
+                return res.status(409).json({error: error.message})
+            }
+
+            req.user.name = name
+            req.user.email = email
+            await req.user.save()
+            res.send('Perfil actualizado correctamente')
+        }
+        catch (error) {
+            res.status(500).json({error: 'Error interno del servidor.'})
+        }
+    }
+
+    static changePassword = async(req: Request, res: Response) => {
+        try {
+            const { current_password, password, password_confirmation } = req.body
+
+            const user = await User.findById(req.user._id, undefined, undefined)
+            const isPasswordCorrect = await checkPassword(current_password, user.password)
+            if (!isPasswordCorrect) {
+                const error = new Error('El password actual es incorrecto')
+                return res.status(401).json({error: error.message})
+            }
+            user.password = await hashPassword(password)
+            await user.save()
+            res.send('Password modificado correctamente')
+        }
+        catch (error) {
+            res.status(500).json({error: 'Error interno del servidor.'})
+        }
+    }
+
+    static checkPassword = async(req: Request, res: Response) => {
+        try {
+            const { password } = req.body
+            const user = await User.findById(req.user._id, undefined, undefined)
+            const isPasswordCorrect = await checkPassword(password, user.password)
+            if (!isPasswordCorrect) {
+                const error = new Error('El password es incorrecto')
+                return res.status(401).json({error: error.message})
+            }
+            res.send('Password correcto')
+        }
+        catch (error) {
+            res.status(500).json({error: 'Error interno del servidor.'})
+        }
+    }
+
 }

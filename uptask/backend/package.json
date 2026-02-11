@@ -13,7 +13,6 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@types/jsonwebtoken": "^9.0.10",
     "bcrypt": "^6.0.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -26,6 +25,7 @@
     "nodemailer": "^7.0.12"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",

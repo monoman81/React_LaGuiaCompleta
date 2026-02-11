@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { ForgotPasswordForm } from "../../types";
-import ErrorMessage from "@/components/ErrorMessage";
-import {useMutation} from "@tanstack/react-query";
+import type { ForgotPasswordForm } from "@/types/index"
+import ErrorMessage from "@/components/ErrorMessage"
+import {useMutation} from "@tanstack/react-query"
 import {forgotPassword} from "@/api/authApi"
-import {toast} from "react-toastify";
+import {toast} from "react-toastify"
 
 export default function ForgotPasswordView() {
     const initialValues: ForgotPasswordForm = {

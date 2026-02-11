@@ -1,7 +1,7 @@
-import Header from "./components/Header.js"
-import Footer from "./components/Footer.js"
-import Guitar from "./components/Guitar.js"
-import { useCart } from "./hooks/useCart.js"
+import Header from "./components/Header"
+import Footer from "./components/Footer"
+import Guitar from "./components/Guitar"
+import { useCart } from "./hooks/useCart"
 
 function App() {
 

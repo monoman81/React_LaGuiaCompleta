@@ -29,7 +29,18 @@ export class TaskController {
 
     static getTaskById = async (req: Request, res: Response) => {
         try {
-            return res.json(req.task)
+            const task = await Task.findById(req.task._id, undefined, undefined)
+                .populate({
+                    path: 'completedBy.user',
+                    select: 'id name email'
+                }).populate({
+                    path: 'notes',
+                    populate: {
+                        path: 'createdBy',
+                        select: '_id name email'
+                    }
+                })
+            return res.json(task)
         }
         catch (error) {
             return res.status(500).send('Error interno del servidor')
@@ -62,6 +73,15 @@ export class TaskController {
     static updateTaskStatus = async (req: Request, res: Response) => {
         try {
             req.task.status = req.body.status
+            const data = {
+                user: req.user._id,
+                status: req.task.status
+            }
+            req.task.completedBy.push(data)
+            // if (req.body.status === 'pending')
+            //     req.task.completedBy = null
+            // else
+            //     req.task.completedBy = req.user._id
             await req.task.save()
             return res.send('Status actualizado correctamente')
         }
