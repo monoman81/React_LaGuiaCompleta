@@ -1,7 +1,7 @@
 import {isAxiosError} from "axios"
 import type {Project, ProjectFormData} from "@/types/index"
 import api from "@/lib/axios"
-import {DashboardProjectsSchema, EditProjecSchema, ProjectSchema} from "@/types/index"
+import {DashboardProjectsSchema, EditProjectSchema, ProjectSchema} from "@/types/index"
 
 type ProjectAPIType = {
     formData: ProjectFormData,
@@ -39,7 +39,7 @@ export const getProjects = async () => {
 export const getProjectById = async (id: Project['_id']) => {
     try {
         const { data } = await api.get(`/projects/${id}`)
-        const response = EditProjecSchema.safeParse(data)
+        const response = EditProjectSchema.safeParse(data)
         if (response.success)
             return response.data
     }

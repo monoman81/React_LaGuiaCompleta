@@ -103,14 +103,14 @@ export const DashboardProjectsSchema = z.array(
     })
 )
 
-export const EditProjecSchema = ProjectSchema.pick({
+export const EditProjectSchema = ProjectSchema.pick({
     projectName: true,
     clientName: true,
     description: true
 })
 
 export type Project = z.infer<typeof ProjectSchema>
-export type ProjectFormData = z.infer<typeof EditProjecSchema>
+export type ProjectFormData = z.infer<typeof EditProjectSchema>
 //export type ProjectFormData = Pick<Project, 'projectName' | 'clientName' | 'description'>
 
 /** Team **/
